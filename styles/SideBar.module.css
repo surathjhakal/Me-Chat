@@ -1,6 +1,6 @@
 .sideBar {
   display: grid;
-  grid-template-rows: 6% 10% 6% 6% auto;
+  grid-template-rows: 6% 9% 6% 6% 6% auto;
   height: 96vh;
 }
 
@@ -87,6 +87,12 @@
   overflow: scroll;
   background-color: #fff;
   border-right: 1px solid lightgray;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.sideBar_chats::-webkit-scrollbar {
+  display: none;
 }
 
 @media screen and (max-width: 1400px) {

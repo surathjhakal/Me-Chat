@@ -1,5 +1,5 @@
 import Head from "next/head";
-import ChatSection from "../components/ChatSection";
+import PhoneConnected from "../components/PhoneConnected";
 import SideBar from "../components/SideBar";
 import styles from "../styles/Home.module.css";
 
@@ -16,7 +16,7 @@ export default function Home() {
       <div className={styles.app_header}></div>
       <div className={styles.app_content}>
         <SideBar />
-        <ChatSection />
+        <PhoneConnected />
       </div>
     </div>
   );

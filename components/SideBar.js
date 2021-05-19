@@ -13,14 +13,19 @@ import SideBarChat from "./SideBarChat";
 
 function SideBar() {
   const [user] = useAuthState(auth);
+
   const userChat = db
     .collection("chats")
-    .where("users", "array-contains", user.email);
+    .where("users", "array-contains", user?.email);
+
+  const globalChat = db.collection("globalchats");
+
   const [chatSnapshot] = useCollection(userChat);
+  const [globalChatSnapshot] = useCollection(globalChat);
 
   const createChat = () => {
     const input = prompt(
-      "Please enter the email address of the person you wish to chat"
+      "Please enter the email address of the person you wish to chat.."
     );
     if (!input) return null;
     if (EmailValidator.validate(input) && user.email !== input) {
@@ -32,6 +37,13 @@ function SideBar() {
         alert("Chat already exist..");
       }
     }
+  };
+  const createGlobalChat = () => {
+    const input = prompt("Please enter the global chat name..");
+    if (!input) return null;
+    db.collection("globalchats").add({
+      name: input,
+    });
   };
 
   const chatExist = (recipientEmail) => {
@@ -51,7 +63,12 @@ function SideBar() {
       <div className={styles.sideBar}>
         <div className={styles.sideBar_header}>
           <IconButton>
-            <Avatar src={user.photoURL} onClick={() => auth.signOut()} />
+            <Avatar
+              src={user.photoURL}
+              onClick={() => {
+                auth.signOut();
+              }}
+            />
           </IconButton>
           <div className={styles.sideBar_header_right}>
             <IconButton>
@@ -91,9 +108,22 @@ function SideBar() {
             START A NEW CHAT
           </button>
         </div>
+        <div onClick={createGlobalChat}>
+          <button className={styles.sideBar_addNewChat}>
+            START A NEW GLOBAL CHAT
+          </button>
+        </div>
         <div className={styles.sideBar_chats}>
           {chatSnapshot?.docs.map((chat) => (
             <SideBarChat key={chat.id} id={chat.id} users={chat.data().users} />
+          ))}
+          {globalChatSnapshot?.docs.map((chat) => (
+            <SideBarChat
+              key={chat.id}
+              id={chat.id}
+              name={chat.data().name}
+              global
+            />
           ))}
         </div>
       </div>

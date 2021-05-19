@@ -4,7 +4,7 @@ import styles from "../styles/Login.module.css";
 
 function Login() {
   const signIn = () => {
-    auth.signInWithPopup(provider).catch();
+    auth.signInWithPopup(provider).catch(alert);
   };
   return (
     <div className={styles.login}>

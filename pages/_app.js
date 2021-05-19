@@ -2,7 +2,7 @@ import firebase from "firebase";
 import "../styles/globals.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 import db, { auth } from "../firebase";
-import Login from "../components/Login";
+import Login from "./login";
 import Loading from "../components/Loading";
 import { useEffect } from "react";
 
@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     if (user) {
-      db.collection("users").doc(user.id).set(
+      db.collection("users").doc(user.uid).set(
         {
           email: user.email,
           lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
@@ -23,9 +23,7 @@ function MyApp({ Component, pageProps }) {
   }, [user]);
 
   if (loading) return <Loading />;
-  if (!user) {
-    return <Login />;
-  }
+  if (!user) return <Login />;
   return <Component {...pageProps} />;
 }
 

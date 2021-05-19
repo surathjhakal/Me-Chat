@@ -1,0 +1,94 @@
+.chatSection {
+  display: grid;
+  grid-template-rows: 6% auto 6%;
+  height: 96vh;
+}
+
+.chatSection_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2%;
+}
+
+.sideBar_header_right {
+  display: flex;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.chatSection_messages {
+  background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/whatsapp-chat-background.jpg");
+  background-repeat: repeat;
+  background-size: contain;
+  overflow: scroll;
+  padding: 30px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.chatSection_messages::-webkit-scrollbar {
+  display: none;
+}
+
+.chatSection_message {
+  position: relative;
+  padding: 10px;
+  padding-top: 20px;
+  background-color: #dcf8c6;
+  border-radius: 10px;
+  width: fit-content;
+  margin-bottom: 20px;
+  font-size: 18px;
+  margin-left: auto;
+}
+
+.chat_recipient {
+  margin-right: auto;
+  background-color: #fff;
+  margin-left: 0;
+}
+
+.chatSection_timestamp {
+  font-size: 9px;
+  margin-left: 0.8rem;
+  font-weight: 600;
+}
+
+.chatSection_name {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 700;
+  top: 2px;
+  left: 10px;
+  display: flex;
+}
+
+.chatSection_footer {
+  display: flex;
+  align-items: center;
+  color: grey;
+  justify-content: space-between;
+}
+
+.message_input {
+  /* padding: 5%; */
+  display: flex;
+  padding: 12px 10px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+}
+
+@media screen and (max-width: 1400px) {
+  .chatSection {
+    height: 100vh;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .chatSection {
+    border-top: 1px solid grey;
+  }
+}

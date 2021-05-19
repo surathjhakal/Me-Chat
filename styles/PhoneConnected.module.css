@@ -1,0 +1,27 @@
+.phoneConnected {
+  background-color: #f8f9fb;
+  display: grid;
+  place-items: center;
+}
+
+.phoneConnected_body {
+  padding-top: 5rem;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #5d5d5d;
+}
+
+.phoneConnected_body > img {
+  height: 350px;
+}
+
+.phoneConnected_body > h1 {
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.phoneConnected_body > p {
+  width: 70%;
+}
