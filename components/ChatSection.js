@@ -10,12 +10,13 @@ import getRecipientData from "../utils/getRecipientData";
 import getRecipientEmail from "../utils/getRecipientEmail";
 import firebase from "firebase";
 import db, { auth } from "../firebase";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { useCollection } from "react-firebase-hooks/firestore";
 import TimeAgo from "timeago-react";
 
 function ChatSection({ chat, messages, global }) {
+  const endOfMessageRef = useRef(null);
   const router = useRouter();
   const [input, setInput] = useState("");
   const [user] = useAuthState(auth);
@@ -37,6 +38,13 @@ function ChatSection({ chat, messages, global }) {
       .collection("messages")
       .orderBy("timestamp", "asc")
   );
+
+  const scrollToBottom = () => {
+    endOfMessageRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -66,6 +74,7 @@ function ChatSection({ chat, messages, global }) {
         });
     }
     setInput("");
+    scrollToBottom();
   };
 
   return (
@@ -153,6 +162,7 @@ function ChatSection({ chat, messages, global }) {
               ))}
             </>
           )}
+          <div ref={endOfMessageRef} style={{ marginBottom: "50px" }}></div>
         </div>
       ) : (
         <div className={styles.chatSection_messages}>
