@@ -1,6 +1,6 @@
 .chatSection {
   display: grid;
-  grid-template-rows: 6% auto 6%;
+  grid-template-rows: 7% auto 7%;
   height: 96vh;
 }
 
@@ -87,8 +87,17 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 900px) {
   .chatSection {
     border-top: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+  }
+  .chatSection_header {
+    padding: 0.5rem 0.5rem;
+  }
+  .chatSection_messages {
+    height: 500px;
   }
 }

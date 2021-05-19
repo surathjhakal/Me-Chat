@@ -29,10 +29,20 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
   .app_content {
-    grid-template-columns: 100%;
-    grid-template-rows: 70% auto;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+  }
+  .app_header {
+    display: none;
   }
 }
+
+/* @media screen and (max-height: 600px) {
+  .app_content {
+    grid-template-columns: 100%;
+    grid-template-rows: 50rem auto;
+  }
+} */

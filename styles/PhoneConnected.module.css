@@ -20,8 +20,32 @@
 .phoneConnected_body > h1 {
   margin-top: 1.2rem;
   margin-bottom: 1.2rem;
+  font-size: 18px;
 }
 
 .phoneConnected_body > p {
   width: 70%;
+}
+
+@media screen and (max-width: 900px) {
+  .phoneConnected_body > img {
+    height: 120px;
+  }
+  .phoneConnected_body {
+    padding-top: 5rem;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #5d5d5d;
+    padding-bottom: 5rem;
+  }
+  .phoneConnected_body > h1 {
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+    font-size: 18px;
+  }
+  .phoneConnected_body > p {
+    width: 90%;
+  }
 }

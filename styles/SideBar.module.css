@@ -1,6 +1,6 @@
 .sideBar {
   display: grid;
-  grid-template-rows: 6% 9% 6% 6% 6% auto;
+  grid-template-rows: 7% 9% 7% 7% 7% auto;
   height: 96vh;
 }
 
@@ -30,8 +30,8 @@
 .sideBar_notify_left {
   background-color: #fff;
   border-radius: 50%;
-  height: 4.5vh;
-  width: 2.4vw;
+  height: 40px;
+  width: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,9 +72,9 @@
   border-bottom: 1px solid lightgray;
   border-right: 1px solid lightgray;
   width: 100%;
-  height: 100%;
   font-size: 1rem;
   cursor: pointer;
+  height: 100%;
 }
 
 .sideBar_addNewChat:hover {
@@ -100,8 +100,22 @@
     height: 100vh;
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   .sideBar {
-    grid-template-rows: 6% 10% 6% 47%;
+    /* grid-template-rows: 10% 14% 10% 8% 8% 100px; */
+    display: flex;
+    flex-direction: column;
+    height: 650px;
+  }
+  .sideBar_search {
+    height: 50px;
+  }
+  .sideBar_addNewChat {
+    height: 50px;
+  }
+  .sideBar_chats {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
   }
 }

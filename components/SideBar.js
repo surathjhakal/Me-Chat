@@ -59,73 +59,69 @@ function SideBar() {
   };
 
   return (
-    <div>
-      <div className={styles.sideBar}>
-        <div className={styles.sideBar_header}>
+    <div className={styles.sideBar}>
+      <div className={styles.sideBar_header}>
+        <IconButton>
+          <Avatar
+            src={user.photoURL}
+            onClick={() => {
+              auth.signOut();
+            }}
+          />
+        </IconButton>
+        <div className={styles.sideBar_header_right}>
           <IconButton>
-            <Avatar
-              src={user.photoURL}
-              onClick={() => {
-                auth.signOut();
-              }}
-            />
+            <DonutLargeIcon />
           </IconButton>
-          <div className={styles.sideBar_header_right}>
-            <IconButton>
-              <DonutLargeIcon />
-            </IconButton>
-            <IconButton>
-              <ChatIcon />
-            </IconButton>
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          </div>
+          <IconButton>
+            <ChatIcon />
+          </IconButton>
+          <IconButton>
+            <MoreVertIcon />
+          </IconButton>
         </div>
-        <div className={styles.sideBar_notify}>
-          <div className={styles.sideBar_notify_left}>
-            <NotificationsOffIcon />
-          </div>
-          <div className={styles.sideBar_notify_right}>
-            <p style={{ fontSize: "1.1rem", paddingBottom: "4px" }}>
-              Get notified of new messages
-            </p>
-            <p style={{ fontSize: "0.9rem" }}>Turn on desktop notifications </p>
-          </div>
+      </div>
+      <div className={styles.sideBar_notify}>
+        <div className={styles.sideBar_notify_left}>
+          <NotificationsOffIcon />
         </div>
-        <div className={styles.sideBar_search}>
-          <div className={styles.sideBar_search_inner}>
-            <SearchIcon />
-            <input
-              className={styles.search_bar}
-              type="text"
-              placeholder="Search or start new chat"
-            />
-          </div>
+        <div className={styles.sideBar_notify_right}>
+          <p style={{ fontSize: "1.1rem", paddingBottom: "4px" }}>
+            Get notified of new messages
+          </p>
+          <p style={{ fontSize: "0.9rem" }}>Turn on desktop notifications </p>
         </div>
-        <div onClick={createChat}>
-          <button className={styles.sideBar_addNewChat}>
-            START A NEW CHAT
-          </button>
+      </div>
+      <div className={styles.sideBar_search}>
+        <div className={styles.sideBar_search_inner}>
+          <SearchIcon />
+          <input
+            className={styles.search_bar}
+            type="text"
+            placeholder="Search or start new chat"
+          />
         </div>
-        <div onClick={createGlobalChat}>
-          <button className={styles.sideBar_addNewChat}>
-            START A NEW GLOBAL CHAT
-          </button>
-        </div>
-        <div className={styles.sideBar_chats}>
-          {chatSnapshot?.docs.map((chat) => (
-            <SideBarChat key={chat.id} id={chat.id} users={chat.data().users} />
-          ))}
-          {globalChatSnapshot?.docs.map((chat) => (
-            <SideBarChat
-              key={chat.id}
-              id={chat.id}
-              name={chat.data().name}
-              global
-            />
-          ))}
-        </div>
+      </div>
+      <div onClick={createChat}>
+        <button className={styles.sideBar_addNewChat}>START A NEW CHAT</button>
+      </div>
+      <div onClick={createGlobalChat}>
+        <button className={styles.sideBar_addNewChat}>
+          START A NEW GLOBAL CHAT
+        </button>
+      </div>
+      <div className={styles.sideBar_chats}>
+        {chatSnapshot?.docs.map((chat) => (
+          <SideBarChat key={chat.id} id={chat.id} users={chat.data().users} />
+        ))}
+        {globalChatSnapshot?.docs.map((chat) => (
+          <SideBarChat
+            key={chat.id}
+            id={chat.id}
+            name={chat.data().name}
+            global
+          />
+        ))}
       </div>
     </div>
   );

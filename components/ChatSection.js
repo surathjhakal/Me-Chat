@@ -97,7 +97,7 @@ function ChatSection({ chat, messages, global }) {
             </>
           )}
         </div>
-        <div>
+        <div style={{ display: "flex" }}>
           <IconButton>
             <SearchIcon />
           </IconButton>
