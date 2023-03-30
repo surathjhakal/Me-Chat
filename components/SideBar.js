@@ -10,9 +10,14 @@ import db, { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import SideBarChat from "./SideBarChat";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import getRecipientEmail from "../utils/getRecipientEmail";
 
 function SideBar() {
+  const [searchChat, setSearchChat] = useState("");
   const [user] = useAuthState(auth);
+  const router = useRouter();
 
   const userChat = db
     .collection("chats")
@@ -65,7 +70,9 @@ function SideBar() {
           <Avatar
             src={user.photoURL}
             onClick={() => {
-              auth.signOut();
+              auth.signOut().then(() => {
+                router.replace("/");
+              });
             }}
           />
         </IconButton>
@@ -99,6 +106,8 @@ function SideBar() {
             className={styles.search_bar}
             type="text"
             placeholder="Search or start new chat"
+            value={searchChat}
+            onChange={(e) => setSearchChat(e.target.value)}
           />
         </div>
       </div>
@@ -111,17 +120,25 @@ function SideBar() {
         </button>
       </div>
       <div className={styles.sideBar_chats}>
-        {chatSnapshot?.docs.map((chat) => (
-          <SideBarChat key={chat.id} id={chat.id} users={chat.data().users} />
-        ))}
-        {globalChatSnapshot?.docs.map((chat) => (
-          <SideBarChat
-            key={chat.id}
-            id={chat.id}
-            name={chat.data().name}
-            global
-          />
-        ))}
+        {globalChatSnapshot?.docs
+          .filter((chat) => chat.data().name.includes(searchChat))
+          .map((chat) => (
+            <SideBarChat
+              key={chat.id}
+              id={chat.id}
+              name={chat.data().name}
+              global
+            />
+          ))}
+        {chatSnapshot?.docs
+          .filter((chat) =>
+            getRecipientEmail(chat.data().users, user.email).includes(
+              searchChat
+            )
+          )
+          .map((chat) => (
+            <SideBarChat key={chat.id} id={chat.id} users={chat.data().users} />
+          ))}
       </div>
     </div>
   );

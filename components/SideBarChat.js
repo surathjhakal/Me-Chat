@@ -12,25 +12,25 @@ export default function SideBarChat({ id, users, global, name }) {
   const router = useRouter();
   const [user] = useAuthState(auth);
 
-  useEffect(() => {
-    if (id && global) {
-      db.collection("globalchats")
-        .doc(id)
-        .collection("messages")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) =>
-          setMessages(snapshot.docs.map((doc) => doc.data()))
-        );
-    } else if (id) {
-      db.collection("chats")
-        .doc(id)
-        .collection("messages")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) =>
-          setMessages(snapshot.docs.map((doc) => doc.data()))
-        );
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id && global) {
+  //     db.collection("globalchats")
+  //       .doc(id)
+  //       .collection("messages")
+  //       .orderBy("timestamp", "desc")
+  //       .onSnapshot((snapshot) =>
+  //         setMessages(snapshot.docs.map((doc) => doc.data()))
+  //       );
+  //   } else if (id) {
+  //     db.collection("chats")
+  //       .doc(id)
+  //       .collection("messages")
+  //       .orderBy("timestamp", "desc")
+  //       .onSnapshot((snapshot) =>
+  //         setMessages(snapshot.docs.map((doc) => doc.data()))
+  //       );
+  //   }
+  // }, [id]);
 
   const enterChat = () => {
     router.push(`/chats/${id}`);
@@ -50,7 +50,6 @@ export default function SideBarChat({ id, users, global, name }) {
           <Avatar src={recipient?.photoURL} />
           <div className={styles.sideBarChat_info}>
             <h3>{recipientEmail.slice(0, recipientEmail.length - 10)}</h3>
-            <p>{messages && messages[0]?.message}</p>
           </div>
         </div>
       ) : (
@@ -58,7 +57,6 @@ export default function SideBarChat({ id, users, global, name }) {
           <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzbwK44LEjD9rnk9L3qsV3CYpx1ZD-yt95rg&usqp=CAU" />
           <div className={styles.sideBarChat_info}>
             <h3>{name} (Group)</h3>
-            <p>{messages && messages[0]?.message}</p>
           </div>
         </div>
       )}

@@ -23,12 +23,12 @@
 .login_content > button {
   margin-top: 50px;
   text-transform: inherit !important;
-  background-color: #22a860 !important;
+  background-color: #ef8833 !important;
   color: white;
   padding: 0.6rem 1.4rem;
   font-size: 1.1rem;
 }
 
 .login_content > button:hover {
-  background-color: #04833f !important;
+  background-color: #e36600 !important;
 }

@@ -10,10 +10,10 @@ function globalChat({ chat, messages }) {
   return (
     <>
       <Head>
-        <title>Whatsapp Clone</title>
+        <title>MeChat</title>
         <link
           rel="icon"
-          href="https://us.123rf.com/450wm/alsstocks450/alsstocks4502002/alsstocks450200200089/139320546-voronezh-russia-january-31-2020-whatsapp-logo-green-round-icon-with-shadow.jpg?ver=6"
+          href="https://images.vexels.com/media/users/3/139911/isolated/preview/1afb4038427b2bd8edd275940aea269d-chat-service-icon.png"
         />
       </Head>
       <div className={styles.app}>
@@ -36,15 +36,11 @@ export async function getServerSideProps(context) {
     .orderBy("timestamp", "asc")
     .get();
 
-  const messages = messagesRes.docs
-    .map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }))
-    .map((messages) => ({
-      ...messages,
-      timestamp: messages.timestamp.toDate().getTime(),
-    }));
+  const messages = messagesRes.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+    timestamp: doc.data().timestamp.toDate().getTime(),
+  }));
 
   const chatRes = await chatID.get();
   const chat = {

@@ -11,11 +11,11 @@ export default function Loading() {
         }}
       >
         <img
-          height={200}
+          height={150}
           style={{ marginBottom: 50 }}
-          src="https://us.123rf.com/450wm/alsstocks450/alsstocks4502002/alsstocks450200200089/139320546-voronezh-russia-january-31-2020-whatsapp-logo-green-round-icon-with-shadow.jpg?ver=6"
+          src="https://images.vexels.com/media/users/3/139911/isolated/preview/1afb4038427b2bd8edd275940aea269d-chat-service-icon.png"
         />
-        <Circle color="#3CBC28" size={60} />
+        <Circle color="#ef8833" size={60} />
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { useCollection } from "react-firebase-hooks/firestore";
 import TimeAgo from "timeago-react";
+import CryptoJS from "crypto-js";
 
 function ChatSection({ chat, messages, global }) {
   const endOfMessageRef = useRef(null);
@@ -45,7 +46,7 @@ function ChatSection({ chat, messages, global }) {
       block: "start",
     });
   };
-
+  console.log("key", typeof process.env.SECRET_KEY);
   const sendMessage = (e) => {
     e.preventDefault();
     db.collection("users").doc(user.uid).set(
@@ -55,26 +56,39 @@ function ChatSection({ chat, messages, global }) {
       { merge: true }
     );
     if (!global) {
-      db.collection("chats").doc(router.query.id).collection("messages").add({
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        message: input,
-        displayName: user.displayName,
-        user: user.email,
-        photoURL: user.photoURL,
-      });
+      db.collection("chats")
+        .doc(router.query.id)
+        .collection("messages")
+        .add({
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          message: encryptMessage(input),
+          displayName: user.displayName,
+          user: user.email,
+          photoURL: user.photoURL,
+        });
     } else {
       db.collection("globalchats")
         .doc(router.query.id)
         .collection("messages")
         .add({
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          message: input,
+          message: encryptMessage(input),
           displayName: user.displayName,
           user: user.email,
+          photoURL: user.photoURL,
         });
     }
     setInput("");
     scrollToBottom();
+  };
+
+  const encryptMessage = (message) => {
+    return CryptoJS.AES.encrypt(message, process.env.SECRET_KEY).toString();
+  };
+
+  const dycrptMessage = (message) => {
+    const bytes = CryptoJS.AES.decrypt(message, process.env.SECRET_KEY);
+    return bytes.toString(CryptoJS.enc.Utf8);
   };
 
   return (
@@ -115,71 +129,102 @@ function ChatSection({ chat, messages, global }) {
           </IconButton>
         </div>
       </div>
-      {globalMessageSnapshot ? (
+      {globalMessageSnapshot || messageSnapshot ? (
         <div className={styles.chatSection_messages}>
-          {!global ? (
+          {!global && messageSnapshot ? (
             <>
               {messageSnapshot.docs.map((message) => (
-                <p
+                <div
                   className={`${styles.chatSection_message} ${
                     message.data().user !== user.email && styles.chat_recipient
                   }`}
                 >
-                  <span className={styles.chatSection_name}>
-                    {message.data().displayName}
-                  </span>
-                  {message.data().message}
-                  <span className={styles.chatSection_timestamp}>
-                    {message
-                      ?.data()
-                      .timestamp?.toDate()
-                      .toString()
-                      .slice(0, 25)}
-                  </span>
-                </p>
+                  <Avatar
+                    src={message.data()?.photoURL}
+                    className={styles.chatSection_message_photoUrl}
+                  />
+                  <p
+                    className={`${styles.chatSection_message_data}
+                    }`}
+                  >
+                    <span className={styles.chatSection_name}>
+                      {message.data().displayName}
+                    </span>
+                    {dycrptMessage(message.data().message)}
+                    <span className={styles.chatSection_timestamp}>
+                      {message
+                        ?.data()
+                        .timestamp?.toDate()
+                        .toString()
+                        .slice(0, 25)}
+                    </span>
+                  </p>
+                </div>
               ))}
             </>
           ) : (
-            <>
-              {globalMessageSnapshot.docs.map((message) => (
-                <p
-                  className={`${styles.chatSection_message} ${
-                    message.data().user !== user.email && styles.chat_recipient
-                  }`}
-                >
-                  <span className={styles.chatSection_name}>
-                    {message.data().displayName}
-                  </span>
-                  {message.data().message}
-                  <span className={styles.chatSection_timestamp}>
-                    {message
-                      ?.data()
-                      .timestamp?.toDate()
-                      .toString()
-                      .slice(0, 25)}
-                  </span>
-                </p>
-              ))}
-            </>
+            globalMessageSnapshot && (
+              <>
+                {globalMessageSnapshot.docs.map((message) => (
+                  <div
+                    className={`${styles.chatSection_message} ${
+                      message.data().user !== user.email &&
+                      styles.chat_recipient
+                    }`}
+                  >
+                    <Avatar
+                      src={message.data()?.photoURL}
+                      className={styles.chatSection_message_photoUrl}
+                    />
+                    <p
+                      className={`${styles.chatSection_message_data}
+                    }`}
+                    >
+                      <span className={styles.chatSection_name}>
+                        {message.data().displayName}
+                      </span>
+                      {dycrptMessage(message.data().message)}
+                      <span className={styles.chatSection_timestamp}>
+                        {message
+                          ?.data()
+                          .timestamp?.toDate()
+                          .toString()
+                          .slice(0, 25)}
+                      </span>
+                    </p>
+                  </div>
+                ))}
+              </>
+            )
           )}
           <div ref={endOfMessageRef} style={{ marginBottom: "50px" }}></div>
         </div>
       ) : (
         <div className={styles.chatSection_messages}>
           {JSON.parse(messages).map((message) => (
-            <p
+            <div
               className={`${styles.chatSection_message} ${
                 message.user !== user.email && styles.chat_recipient
               }`}
             >
-              <span className={styles.chatSection_name}>
-                {message.displayName}
-              </span>
-              {message.message}
-              <span className={styles.chatSection_timestamp}>
-                {message?.timestamp?.toString().slice(0, 25)}
-              </span>
-            </p>
+              <Avatar
+                src={message?.photoURL}
+                className={styles.chatSection_message_photoUrl}
+              />
+              <p
+                className={`${styles.chatSection_message_data} ${
+                  message.user !== user.email && styles.chat_recipient
+                }`}
+              >
+                <span className={styles.chatSection_name}>
+                  {message.displayName}
+                </span>
+                {dycrptMessage(message.message)}
+                <span className={styles.chatSection_timestamp}>
+                  {message?.timestamp?.toString().slice(0, 25)}
+                </span>
+              </p>
+            </div>
           ))}
         </div>
       )}

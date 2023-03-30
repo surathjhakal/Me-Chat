@@ -9,9 +9,9 @@ function Login() {
   return (
     <div className={styles.login}>
       <div className={styles.login_content}>
-        <img src="https://us.123rf.com/450wm/alsstocks450/alsstocks4502002/alsstocks450200200089/139320546-voronezh-russia-january-31-2020-whatsapp-logo-green-round-icon-with-shadow.jpg?ver=6" />
+        <img src="https://images.vexels.com/media/users/3/139911/isolated/preview/1afb4038427b2bd8edd275940aea269d-chat-service-icon.png" />
         <div className={styles.login_text}>
-          <h1>Sign in to Whatsapp</h1>
+          <h1>Sign in to MeChat</h1>
         </div>
         <Button onClick={signIn}>Sign In With Google</Button>
       </div>

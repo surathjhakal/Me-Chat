@@ -6,15 +6,14 @@ const PhoneConnected = () => {
       <div className={styles.phoneConnected_body}>
         <h1>To chat with me enter "jhakal.surath@gmail.com" email</h1>
         <h1>To log out you can click your avatar</h1>
-        <img src="https://c1.thejournal.ie/media/2015/09/whatsapp-web-phone-symbol-752x501.jpg" />
+        <img src="https://images.vexels.com/media/users/3/139911/isolated/preview/1afb4038427b2bd8edd275940aea269d-chat-service-icon.png" />
         <h1>Keep your phone connected</h1>
         <br />
         <p>
-          WhatsApp connects to your phone to sync messages. To reduce data
-          usage, connect you phone to Wi-Fi
+          MeChat connects to your phone to sync messages. To reduce data usage,
+          connect you phone to Wi-Fi
         </p>
       </div>
-      <div className={styles.greenLine}></div>
     </div>
   );
 };

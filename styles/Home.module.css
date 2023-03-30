@@ -17,15 +17,16 @@
 
 .app_header {
   height: 13vh;
-  position: fixed;
-  background-color: #409788;
+  position: absolute;
+  top: 0;
+  background-color: #f59a4f;
   width: 100%;
 }
 
 @media screen and (max-width: 1400px) {
   .app_content {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
   }
 }
 
@@ -39,10 +40,3 @@
     display: none;
   }
 }
-
-/* @media screen and (max-height: 600px) {
-  .app_content {
-    grid-template-columns: 100%;
-    grid-template-rows: 50rem auto;
-  }
-} */

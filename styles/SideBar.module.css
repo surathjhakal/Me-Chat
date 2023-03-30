@@ -100,12 +100,13 @@
     height: 100vh;
   }
 }
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 900px) {
   .sideBar {
     /* grid-template-rows: 10% 14% 10% 8% 8% 100px; */
     display: flex;
     flex-direction: column;
-    height: 650px;
+    height: 550px;
+    padding-bottom: 1rem;
   }
   .sideBar_search {
     height: 50px;
